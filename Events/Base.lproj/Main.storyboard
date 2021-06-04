@@ -24,27 +24,66 @@
             </objects>
             <point key="canvasLocation" x="-830" y="23"/>
         </scene>
-        <!--Events-->
+        <!--Contacts-->
         <scene sceneID="Tr5-Kn-52Q">
             <objects>
-                <viewController title="Events" id="D4U-Et-Hs5" customClass="ViewController" customModule="Events" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Contacts" id="D4U-Et-Hs5" customClass="ViewController" customModule="Events" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nu8-HM-ufy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JqD-1f-qQF">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactCell" id="PAz-cj-jbD" customClass="ContactRow" customModule="Events" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PAz-cj-jbD" id="KOM-dh-HA8">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="VLE-1G-8Xb" kind="show" id="G3O-Dx-edO"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="8MU-yU-wGe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Events" id="3rL-Nl-AdG">
+                    <navigationItem key="navigationItem" title="Contacts" id="3rL-Nl-AdG">
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="n95-BF-mY1">
                             <connections>
                                 <action selector="addButtonPressed:" destination="D4U-Et-Hs5" id="Thv-tc-YqM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="JqD-1f-qQF" id="YYx-Vq-B7s"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aMz-8A-I7V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="25" y="23"/>
+            <point key="canvasLocation" x="24.637681159420293" y="22.767857142857142"/>
+        </scene>
+        <!--Events-->
+        <scene sceneID="bqK-CD-rwu">
+            <objects>
+                <viewController title="Events" id="VLE-1G-8Xb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="B0J-RX-tX1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="YH8-f6-v8V"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GHx-hY-OmI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dv2-WR-w7L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="709" y="23"/>
         </scene>
     </scenes>
     <resources>

@@ -8,10 +8,24 @@
 import UIKit
 import ContactsUI
 
-class ViewController: UIViewController, CNContactPickerDelegate {
-    var contactStore = CNContactStore()
-    var selectedContact: CNContact? = nil
+class ViewController: UIViewController, CNContactPickerDelegate, UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return addedContects.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath)
+        let contact = addedContects[indexPath.row]
+        let name = [contact.namePrefix, contact.givenName, contact.middleName, contact.familyName, contact.nameSuffix].filter({ $0 != "" }).joined(separator: " ")
+        cell.textLabel?.text = name
+        
+        return cell
+    }
+    
+    var contactStore = CNContactStore()
+    var addedContects: [CNContact] = []
+    
+    @IBOutlet weak var tableView: UITableView!
     @IBAction func addButtonPressed(_ sender: Any) {
         let contactPickerViewController = CNContactPickerViewController()
         
@@ -19,25 +33,21 @@ class ViewController: UIViewController, CNContactPickerDelegate {
         
         present(contactPickerViewController, animated: true, completion: nil)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
-    func showMessge(title: String, message: String) {
-        let alertController = UIAlertController(title: "Contacts", message: message, preferredStyle: UIAlertController.Style.alert)
-        let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { action in
-        }
-        
-        alertController.addAction(alertAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        selectedContact = contact
+        addedContects.append(contact)
+        tableView.beginUpdates()
+        let indexPath = IndexPath(row: addedContects.count - 1, section: 0)
+        tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
+        tableView.endUpdates()
     }
 }
 
