@@ -49,5 +49,13 @@ class ViewController: UIViewController, CNContactPickerDelegate, UITableViewDele
         tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
         tableView.endUpdates()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let contactVC = segue.destination as? EventsViewController, let selectedIndex = tableView.indexPathForSelectedRow?.row else {
+            return
+        }
+        
+        contactVC.contact = addedContects[selectedIndex]
+    }
 }
 
