@@ -7,10 +7,12 @@
 
 import UIKit
 import ContactsUI
+import RealmSwift
 
 class ContactViewController: UIViewController {
+    let realm = try! Realm()
     var contactStore = CNContactStore()
-    var addedContects: [CNContact] = []
+    var addedContacts: Results<Contact>?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,15 +27,20 @@ class ContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addedContacts = realm.objects(Contact.self)
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.delegate = self
         tableView.dataSource = self
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let contactVC = segue.destination as? EventsViewController, let selectedIndex = tableView.indexPathForSelectedRow?.row else { return }
+        guard let contactVC = segue.destination as? EventsViewController, let selectedIndex = tableView.indexPathForSelectedRow?.row, let addedContacts = addedContacts else { return }
         
-        contactVC.contact = addedContects[selectedIndex]
+        contactVC.contact = addedContacts[selectedIndex] as Contact
+    }
+    
+    func createFullName(contact: CNContact) -> String {
+        return [contact.namePrefix, contact.givenName, contact.middleName, contact.familyName, contact.nameSuffix].filter({ $0 != "" }).joined(separator: " ")
     }
 }
 
@@ -41,14 +48,13 @@ class ContactViewController: UIViewController {
 
 extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return addedContects.count
+        return addedContacts?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath)
-        let contact = addedContects[indexPath.row]
-        let name = [contact.namePrefix, contact.givenName, contact.middleName, contact.familyName, contact.nameSuffix].filter({ $0 != "" }).joined(separator: " ")
-        cell.textLabel?.text = name
+        let contact = addedContacts![indexPath.row] as Contact
+        cell.textLabel?.text = contact.name
         
         return cell
     }
@@ -58,10 +64,33 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ContactViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        addedContects.append(contact)
+        let newContact = Contact()
+        newContact.name = createFullName(contact: contact)
+        if let bday = contact.birthday {
+            newContact.dates.append(DateLabel(value: ["label": "Birthday", "date": bday.date ?? Date()]))
+        }
+        
+        let newDates = contact.dates.map { date -> DateLabel in
+            let label = date.label?.trimmingCharacters(in: CharacterSet("_$!<>".unicodeScalars))
+            let newDate = date.value.date
+            
+            return DateLabel(value: ["label": label ?? "", "date": newDate ?? Date()])
+        }
+        
+        newDates.forEach { dateLabel in
+            newContact.dates.append(dateLabel)
+        }
+        
+        try! realm.write({
+            realm.add(newContact)
+        })
+        
+        
         tableView.beginUpdates()
-        let indexPath = IndexPath(row: addedContects.count - 1, section: 0)
-        tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
+        if let addedContacts = addedContacts{
+            let indexPath = IndexPath(row: addedContacts.count - 1, section: 0)
+            tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
+        }
         tableView.endUpdates()
     }
 }
