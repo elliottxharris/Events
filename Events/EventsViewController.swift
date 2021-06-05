@@ -8,7 +8,28 @@
 import UIKit
 import Contacts
 
-class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class EventsViewController: UIViewController {
+    var contact: CNContact?
+    
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet var tableView: UITableView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.tableFooterView = UIView()
+        navigationItem.largeTitleDisplayMode = .never
+        if let contact = contact {
+            name.text = [contact.namePrefix, contact.givenName, contact.middleName, contact.familyName, contact.nameSuffix].filter({ $0 != "" }).joined(separator: " ")
+        }
+        
+    }
+}
+
+// MARK: UITableView functions
+
+extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let contact = contact {
             return contact.birthday != nil ? contact.dates.count + 1 : contact.dates.count
@@ -37,19 +58,4 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return 40
     }
     
-    var contact: CNContact?
-    
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet var tableView: UITableView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.tableFooterView = UIView()
-        navigationItem.largeTitleDisplayMode = .never
-        if let contact = contact {
-            name.text = [contact.namePrefix, contact.givenName, contact.middleName, contact.familyName, contact.nameSuffix].filter({ $0 != "" }).joined(separator: " ")
-        }
-        
-    }
 }

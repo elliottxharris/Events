@@ -27,7 +27,7 @@
         <!--Contacts-->
         <scene sceneID="Tr5-Kn-52Q">
             <objects>
-                <viewController title="Contacts" id="D4U-Et-Hs5" customClass="ViewController" customModule="Events" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Contacts" id="D4U-Et-Hs5" customClass="ContactViewController" customModule="Events" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nu8-HM-ufy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
