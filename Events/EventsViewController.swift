@@ -63,7 +63,10 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventRow
         if let contact = contact {
-            cell.cellLabel.text = contact.dates[indexPath.row].label
+            let formatter = DateFormatter()
+            formatter.timeStyle = .none
+            formatter.dateStyle = .medium
+            cell.cellLabel.text = "\(contact.dates[indexPath.row].label) on \(formatter.string(from: contact.dates[indexPath.row].date))"
         }
         
         return cell
