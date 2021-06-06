@@ -85,10 +85,6 @@ extension ContactViewController: CNContactPickerDelegate {
             newContact.dates.append(dateLabel)
         }
         
-        try! realm.write({
-            realm.add(newContact)
-        })
-        
         if let addedContacts = addedContacts {
             if addedContacts.contains(where: { contact in
                 contact.name == newContact.name
