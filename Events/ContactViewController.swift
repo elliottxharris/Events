@@ -89,12 +89,45 @@ extension ContactViewController: CNContactPickerDelegate {
             realm.add(newContact)
         })
         
-        
-        tableView.beginUpdates()
-        if let addedContacts = addedContacts{
-            let indexPath = IndexPath(row: addedContacts.count - 1, section: 0)
-            tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
+        if let addedContacts = addedContacts {
+            if addedContacts.contains(where: { contact in
+                contact.name == newContact.name
+            }) {
+                addDuplicate(newContact: newContact)
+            } else {
+                try! realm.write({
+                    realm.add(newContact)
+                })
+                
+                tableView.beginUpdates()
+                let indexPath = IndexPath(row: addedContacts.count - 1, section: 0)
+                tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
+                tableView.endUpdates()
+            }
         }
-        tableView.endUpdates()
+        
+    }
+    
+    func addDuplicate(newContact: Contact) {
+        let alertController = UIAlertController(title: "Duplicate", message: "This may be a duplicate. Do you still want to add this contact?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { [self] _ in
+            try! realm.write({
+                realm.add(newContact)
+            })
+            
+            tableView.beginUpdates()
+            if let addedContacts = addedContacts{
+                let indexPath = IndexPath(row: addedContacts.count - 1, section: 0)
+                tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
+            }
+            tableView.endUpdates()
+        }
+        let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+        
+        alertController.addAction(noAction)
+        alertController.addAction(yesAction)
+        
+        dismiss(animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
