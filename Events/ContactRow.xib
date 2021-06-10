@@ -13,20 +13,23 @@
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9ok-4T-HWH" id="HXr-Xx-uYi" customClass="ContactRow" customModule="Events" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXH-jP-3Bj">
-                        <rect key="frame" x="0.0" y="12" width="45" height="20"/>
+                        <rect key="frame" x="20" y="12" width="252" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="uXH-jP-3Bj" secondAttribute="height" multiplier="63:5" id="hFt-jW-qne"/>
+                            <constraint firstAttribute="height" constant="20" id="skl-px-szh"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="uXH-jP-3Bj" firstAttribute="top" secondItem="HXr-Xx-uYi" secondAttribute="top" constant="12" id="5un-KB-XCa"/>
-                    <constraint firstItem="uXH-jP-3Bj" firstAttribute="centerY" secondItem="HXr-Xx-uYi" secondAttribute="centerY" id="EkT-Zn-U5W"/>
-                    <constraint firstItem="uXH-jP-3Bj" firstAttribute="leading" secondItem="HXr-Xx-uYi" secondAttribute="leading" id="Gvt-FE-M8I"/>
-                    <constraint firstAttribute="bottom" secondItem="uXH-jP-3Bj" secondAttribute="bottom" constant="12" id="jPC-70-UXj"/>
+                    <constraint firstItem="uXH-jP-3Bj" firstAttribute="centerY" secondItem="HXr-Xx-uYi" secondAttribute="centerY" id="Bjl-XG-6bR"/>
+                    <constraint firstItem="uXH-jP-3Bj" firstAttribute="leading" secondItem="HXr-Xx-uYi" secondAttribute="leadingMargin" id="UjC-Hn-qoe"/>
+                    <constraint firstAttribute="bottom" secondItem="uXH-jP-3Bj" secondAttribute="bottom" constant="12" id="dks-QG-slv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

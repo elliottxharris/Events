@@ -7,6 +7,7 @@
 
 import UIKit
 import ContactsUI
+import SwiftUI
 import RealmSwift
 
 class ContactViewController: UIViewController {
@@ -56,9 +57,30 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactRow
         let contact = addedContacts![indexPath.row] as Contact
-        cell.textLabel?.text = contact.name
+        cell.name?.text = contact.name
+        
+        contact.dates.forEach { dateLabel in
+            if dateLabel.isNotified {
+                if let letter = dateLabel.label.first {
+                    let notificationIndicator = NotificationIndicator(letter: letter, color: .blue, height: cell.frame.height - 4)
+                    let hostingController = UIHostingController(rootView: notificationIndicator)
+                    addChild(hostingController)
+                    cell.addSubview(hostingController.view)
+                    hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                    let constraints = [
+                        hostingController.view.topAnchor.constraint(equalTo: cell.topAnchor, constant: 2),
+                        cell.bottomAnchor.constraint(equalTo: hostingController.view.bottomAnchor, constant: 2),
+                        cell.rightAnchor.constraint(equalTo: hostingController.view.rightAnchor, constant: CGFloat(12 + contact.dates.index(of: dateLabel)! * Int(cell.frame.height) - 4))
+                    ]
+                    
+                    NSLayoutConstraint.activate(constraints)
+                    hostingController.didMove(toParent: self)
+                }
+            }
+            
+        }
         
         return cell
     }

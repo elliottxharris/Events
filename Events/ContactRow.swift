@@ -9,5 +9,5 @@ import UIKit
 
 class ContactRow: UITableViewCell {
     
-    @IBOutlet weak var name: UILabel?
+    @IBOutlet weak var name: UILabel!
 }

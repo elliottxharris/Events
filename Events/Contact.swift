@@ -11,6 +11,7 @@ import RealmSwift
 class DateLabel: Object {
     @objc dynamic var label: String = ""
     @objc dynamic var date: Date = Date()
+    @objc dynamic var isNotified: Bool = false
 }
 
 class Contact: Object {

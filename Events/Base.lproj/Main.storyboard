@@ -42,9 +42,22 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PAz-cj-jbD" id="KOM-dh-HA8">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWh-lY-o47">
+                                                    <rect key="frame" x="32" y="11.5" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QWh-lY-o47" firstAttribute="centerY" secondItem="KOM-dh-HA8" secondAttribute="centerY" id="RjB-Mo-I7i"/>
+                                                <constraint firstItem="QWh-lY-o47" firstAttribute="leading" secondItem="KOM-dh-HA8" secondAttribute="leadingMargin" constant="12" id="vtM-RD-jOi"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="VLE-1G-8Xb" kind="show" id="G3O-Dx-edO"/>
+                                            <outlet property="name" destination="QWh-lY-o47" id="vm9-wF-ovO"/>
+                                            <segue destination="VLE-1G-8Xb" kind="show" identifier="toEvents" id="Vyo-Ej-Sdo"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -125,8 +138,8 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7h-9F-308">
-                                <rect key="frame" x="80" y="815" width="254" height="47"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7h-9F-308">
+                                <rect key="frame" x="80" y="832" width="254" height="30"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Delete Contact">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
