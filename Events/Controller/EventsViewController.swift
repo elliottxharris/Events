@@ -34,6 +34,17 @@ class EventsViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func notifiedSwitchTapped(_ sender: UISwitch) {
+        if let cell = sender.superview?.superview as? EventRow {
+            let indexPath = tableView.indexPath(for: cell)
+            if let contact = contact {
+                try! realm.write({
+                    contact.dates[indexPath!.row].isNotified = !contact.dates[indexPath!.row].isNotified
+                })
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -67,13 +78,15 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
             formatter.timeStyle = .none
             formatter.dateStyle = .medium
             cell.cellLabel.text = "\(contact.dates[indexPath.row].label) on \(formatter.string(from: contact.dates[indexPath.row].date))"
+            
+            cell.cellToggle.isOn = contact.dates[indexPath.row].isNotified
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        return 44
     }
     
 }

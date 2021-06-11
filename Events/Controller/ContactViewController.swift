@@ -35,12 +35,13 @@ class ContactViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let contactVC = segue.destination as? EventsViewController, let selectedIndex = tableView.indexPathForSelectedRow?.row, let addedContacts = addedContacts else { return }
-        
         contactVC.contact = addedContacts[selectedIndex] as Contact
     }
     
@@ -61,28 +62,11 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
         let contact = addedContacts![indexPath.row] as Contact
         cell.name?.text = contact.name
         
-        contact.dates.forEach { dateLabel in
-            if dateLabel.isNotified {
-                if let letter = dateLabel.label.first {
-                    let notificationIndicator = NotificationIndicator(letter: letter, color: .blue, height: cell.frame.height - 4)
-                    let hostingController = UIHostingController(rootView: notificationIndicator)
-                    addChild(hostingController)
-                    cell.addSubview(hostingController.view)
-                    hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-                    let constraints = [
-                        hostingController.view.topAnchor.constraint(equalTo: cell.topAnchor, constant: 2),
-                        cell.bottomAnchor.constraint(equalTo: hostingController.view.bottomAnchor, constant: 2),
-                        cell.rightAnchor.constraint(equalTo: hostingController.view.rightAnchor, constant: CGFloat(12 + contact.dates.index(of: dateLabel)! * Int(cell.frame.height) - 4))
-                    ]
-                    
-                    NSLayoutConstraint.activate(constraints)
-                    hostingController.didMove(toParent: self)
-                }
-            }
-            
-        }
-        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
     }
 }
 

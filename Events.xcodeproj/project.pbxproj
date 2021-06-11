@@ -13,7 +13,6 @@
 		342B2B5A2668FD19001DB317 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B582668FD19001DB317 /* Main.storyboard */; };
 		342B2B5C2668FD1B001DB317 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5B2668FD1B001DB317 /* Assets.xcassets */; };
 		342B2B5F2668FD1B001DB317 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5D2668FD1B001DB317 /* LaunchScreen.storyboard */; };
-		34B213D8266D85A5002F5A21 /* NotificationIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B213D7266D85A5002F5A21 /* NotificationIndicator.swift */; };
 		34BA0743266A6D720016D5F4 /* ContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0742266A6D720016D5F4 /* ContactRow.swift */; };
 		34BA0745266A892E0016D5F4 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0744266A892E0016D5F4 /* EventsViewController.swift */; };
 		34BA0747266AB6430016D5F4 /* EventRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0746266AB6430016D5F4 /* EventRow.swift */; };
@@ -31,7 +30,6 @@
 		342B2B5B2668FD1B001DB317 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		342B2B5E2668FD1B001DB317 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		342B2B602668FD1B001DB317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		34B213D7266D85A5002F5A21 /* NotificationIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationIndicator.swift; sourceTree = "<group>"; };
 		34BA0742266A6D720016D5F4 /* ContactRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRow.swift; sourceTree = "<group>"; };
 		34BA0744266A892E0016D5F4 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		34BA0746266AB6430016D5F4 /* EventRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRow.swift; sourceTree = "<group>"; };
@@ -72,18 +70,41 @@
 			children = (
 				342B2B522668FD19001DB317 /* AppDelegate.swift */,
 				342B2B542668FD19001DB317 /* SceneDelegate.swift */,
-				342B2B562668FD19001DB317 /* ContactViewController.swift */,
-				34BA074D266BCA930016D5F4 /* Contact.swift */,
-				34BA0744266A892E0016D5F4 /* EventsViewController.swift */,
-				34BA0746266AB6430016D5F4 /* EventRow.swift */,
-				34BA0742266A6D720016D5F4 /* ContactRow.swift */,
-				34B213D7266D85A5002F5A21 /* NotificationIndicator.swift */,
-				342B2B582668FD19001DB317 /* Main.storyboard */,
+				347EAD3326738CBB00766505 /* Model */,
+				347EAD3426738CE100766505 /* View */,
+				347EAD3226738C6400766505 /* Controller */,
 				342B2B5B2668FD1B001DB317 /* Assets.xcassets */,
-				342B2B5D2668FD1B001DB317 /* LaunchScreen.storyboard */,
 				342B2B602668FD1B001DB317 /* Info.plist */,
 			);
 			path = Events;
+			sourceTree = "<group>";
+		};
+		347EAD3226738C6400766505 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				342B2B562668FD19001DB317 /* ContactViewController.swift */,
+				34BA0744266A892E0016D5F4 /* EventsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		347EAD3326738CBB00766505 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				34BA074D266BCA930016D5F4 /* Contact.swift */,
+				34BA0746266AB6430016D5F4 /* EventRow.swift */,
+				34BA0742266A6D720016D5F4 /* ContactRow.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		347EAD3426738CE100766505 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				342B2B582668FD19001DB317 /* Main.storyboard */,
+				342B2B5D2668FD1B001DB317 /* LaunchScreen.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,7 +186,6 @@
 			files = (
 				34BA0743266A6D720016D5F4 /* ContactRow.swift in Sources */,
 				34BA0747266AB6430016D5F4 /* EventRow.swift in Sources */,
-				34B213D8266D85A5002F5A21 /* NotificationIndicator.swift in Sources */,
 				342B2B572668FD19001DB317 /* ContactViewController.swift in Sources */,
 				342B2B532668FD19001DB317 /* AppDelegate.swift in Sources */,
 				342B2B552668FD19001DB317 /* SceneDelegate.swift in Sources */,
