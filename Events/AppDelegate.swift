@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         
         Realm.Configuration.defaultConfiguration = config
+        UNUserNotificationCenter.current().delegate = self
         
         return true
     }

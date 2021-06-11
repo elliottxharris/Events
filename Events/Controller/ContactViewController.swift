@@ -7,13 +7,14 @@
 
 import UIKit
 import ContactsUI
-import SwiftUI
 import RealmSwift
+import UserNotifications
 
 class ContactViewController: UIViewController {
     let realm = try! Realm()
     var contactStore = CNContactStore()
     var addedContacts: Results<Contact>?
+    let manager = LocalNotificationManager()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -32,6 +33,8 @@ class ContactViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.delegate = self
         tableView.dataSource = self
+        
+        manager.schedule()
     }
     
     override func viewWillAppear(_ animated: Bool) {

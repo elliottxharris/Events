@@ -13,6 +13,7 @@
 		342B2B5A2668FD19001DB317 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B582668FD19001DB317 /* Main.storyboard */; };
 		342B2B5C2668FD1B001DB317 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5B2668FD1B001DB317 /* Assets.xcassets */; };
 		342B2B5F2668FD1B001DB317 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5D2668FD1B001DB317 /* LaunchScreen.storyboard */; };
+		347EAD362673947E00766505 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347EAD352673947E00766505 /* LocalNotificationManager.swift */; };
 		34BA0743266A6D720016D5F4 /* ContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0742266A6D720016D5F4 /* ContactRow.swift */; };
 		34BA0745266A892E0016D5F4 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0744266A892E0016D5F4 /* EventsViewController.swift */; };
 		34BA0747266AB6430016D5F4 /* EventRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0746266AB6430016D5F4 /* EventRow.swift */; };
@@ -30,6 +31,7 @@
 		342B2B5B2668FD1B001DB317 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		342B2B5E2668FD1B001DB317 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		342B2B602668FD1B001DB317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		347EAD352673947E00766505 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalNotificationManager.swift; path = Events/Controller/LocalNotificationManager.swift; sourceTree = SOURCE_ROOT; };
 		34BA0742266A6D720016D5F4 /* ContactRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRow.swift; sourceTree = "<group>"; };
 		34BA0744266A892E0016D5F4 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		34BA0746266AB6430016D5F4 /* EventRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRow.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		347EAD3326738CBB00766505 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				347EAD352673947E00766505 /* LocalNotificationManager.swift */,
 				34BA074D266BCA930016D5F4 /* Contact.swift */,
 				34BA0746266AB6430016D5F4 /* EventRow.swift */,
 				34BA0742266A6D720016D5F4 /* ContactRow.swift */,
@@ -190,6 +193,7 @@
 				342B2B532668FD19001DB317 /* AppDelegate.swift in Sources */,
 				342B2B552668FD19001DB317 /* SceneDelegate.swift in Sources */,
 				34BA0745266A892E0016D5F4 /* EventsViewController.swift in Sources */,
+				347EAD362673947E00766505 /* LocalNotificationManager.swift in Sources */,
 				34BA074E266BCA930016D5F4 /* Contact.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +342,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Events/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -356,6 +361,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Events/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
