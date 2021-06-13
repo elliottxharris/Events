@@ -12,6 +12,7 @@ import RealmSwift
 class EventsViewController: UIViewController {
     let realm = try! Realm()
     var contact: Contact?
+    let manager = LocalNotificationManager()
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet var tableView: UITableView!
@@ -37,10 +38,26 @@ class EventsViewController: UIViewController {
     @IBAction func notifiedSwitchTapped(_ sender: UISwitch) {
         if let cell = sender.superview?.superview as? EventRow {
             let indexPath = tableView.indexPath(for: cell)
+            
             if let contact = contact {
+                let event = contact.dates[indexPath!.row]
+                
                 try! realm.write({
-                    contact.dates[indexPath!.row].isNotified = !contact.dates[indexPath!.row].isNotified
+                    contact.dates[indexPath!.row].isNotified = !event.isNotified
                 })
+                
+                if event.isNotified {
+                    let offsetDate = Calendar.current.date(byAdding: .day, value: -7, to: event.date) ?? event.date
+                    var notificationDate = Calendar.current.dateComponents([.calendar, .year, .month, .day, .hour,], from: offsetDate)
+                    notificationDate.hour = 12
+                    notificationDate.year = Calendar.current.dateComponents([.year], from: Date()).year
+                    
+                    let notification = LocalNotificationManager.Notification(id: "\(contact.name): \(event.label)", title: "\(contact.name)'s \(event.label) is coming up", name: contact.name, datetime: notificationDate)
+                    
+                    manager.schedule(notification: notification)
+                } else {
+                    manager.removeScheduledNotification(id: "\(contact.name): \(event.label)")
+                }
             }
         }
     }

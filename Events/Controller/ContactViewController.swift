@@ -34,7 +34,7 @@ class ContactViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        manager.schedule()
+        manager.schedule(notification: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

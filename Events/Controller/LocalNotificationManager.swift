@@ -17,13 +17,16 @@ class LocalNotificationManager {
         var datetime: DateComponents
     }
     
-    var notifications: [Notification] = []
     let notificationCenter = UNUserNotificationCenter.current()
     
-    func listScheduledNotifications() {
-        notificationCenter.getPendingNotificationRequests { requests in
-            requests.forEach { request in
-                print(request)
+    func removeScheduledNotification(id: String) {
+        notificationCenter.getPendingNotificationRequests { (notificationRequests) in
+             for notificationRequest: UNNotificationRequest in notificationRequests {
+                if notificationRequest.identifier == id {
+                    self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
+                    print("Removed notification with id: \(id)")
+                    break
+                }
             }
         }
     }
@@ -39,25 +42,25 @@ class LocalNotificationManager {
         }
     }
     
-    func schedule() {
+    func schedule(notification: Notification?) {
         notificationCenter.getNotificationSettings { settings in
             switch settings.authorizationStatus {
             case .notDetermined:
                 self.requestAuthorization { granted in
                     if granted {
-                        self.scheduleNotifications()
+                        self.scheduleNotification(notification: notification)
                     }
                 }
             case .authorized, .provisional:
-                self.scheduleNotifications()
+                self.scheduleNotification(notification: notification)
             default:
                 break
             }
         }
     }
     
-    private func scheduleNotifications() {
-        notifications.forEach { notification in
+    private func scheduleNotification(notification: Notification?) {
+        if let notification = notification {
             let content = UNMutableNotificationContent()
             content.title = notification.title
             content.sound = .default
@@ -72,6 +75,7 @@ class LocalNotificationManager {
                 print("Notification with id \(notification.id) scheduled")
             }
         }
+        
     }
 }
 
@@ -87,11 +91,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             let contacts = realm.objects(Contact.self)
             let contact = contacts.first { contact in
-                let name = contact.name
-                print(name)
-                let notiName = response.notification.request.content.userInfo["name"] as! String
-                print(notiName)
-                return name == notiName
+                contact.name == response.notification.request.content.userInfo["name"] as! String
             }
 
             if let contact = contact {
