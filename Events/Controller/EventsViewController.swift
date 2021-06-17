@@ -83,7 +83,6 @@ class EventsViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.tableFooterView = UIView()
     
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = editButtonItem
@@ -132,6 +131,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.cellLabel.text = "\(contact.dates[indexPath.row].label) on \(formatter.string(from: contact.dates[indexPath.row].date))"
             
             cell.cellToggle.isOn = contact.dates[indexPath.row].isNotified
+            cell.cellToggle.accessibilityLabel = "\(contact.dates[indexPath.row].label) switch"
         }
         
         return cell
