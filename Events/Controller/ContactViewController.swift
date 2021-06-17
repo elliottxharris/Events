@@ -41,6 +41,7 @@ class ContactViewController: UIViewController {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,7 +70,25 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] action, view, completion in
+            if let contacts = addedContacts {
+                try! realm.write({
+                    realm.delete(contacts[indexPath.row])
+                })
+            }
+            
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+            
+            completion(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
 
@@ -79,6 +98,11 @@ extension ContactViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
         let newContact = Contact()
         newContact.name = createFullName(contact: contact)
+        
+        if let phone = contact.phoneNumbers.first {
+            newContact.phone = phone.value.stringValue
+        }
+        
         if let bday = contact.birthday {
             newContact.dates.append(DateLabel(value: ["label": "Birthday", "date": bday.date ?? Date()]))
         }

@@ -7,6 +7,7 @@
 
 import UIKit
 import Contacts
+import MessageUI
 import RealmSwift
 
 class EventsViewController: UIViewController {
@@ -17,6 +18,8 @@ class EventsViewController: UIViewController {
     @IBOutlet weak var name: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var messageButton: UIButton!
     @IBAction func deleteButtonPressed(_ sender: Any) {
         
         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this contact?", preferredStyle: .actionSheet)
@@ -62,18 +65,50 @@ class EventsViewController: UIViewController {
         }
     }
     
+    @IBAction func callButtonPressed(_ sender: Any) {
+        if let phone = contact?.phone {
+            callNumber(phone.filter({ char in
+                char != "(" && char != ")" && char != "-" && char != " "
+            }))
+        }
+    }
+    
+    @IBAction func messageButtonPressed(_ sender: Any) {
+        if let phone = contact?.phone {
+            sendMessage(phone)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
+    
         navigationItem.largeTitleDisplayMode = .never
+        navigationItem.rightBarButtonItem = editButtonItem
         
         if let contact = contact {
             name.text = contact.name
         }
         
         deleteButton.layer.cornerRadius = 5
+        
+        callButton.layer.cornerRadius = 5
+        callButton.backgroundColor = UIColor(hex: "#262626")
+        
+        messageButton.layer.cornerRadius = 5
+        messageButton.backgroundColor = UIColor(hex: "#262626")
+    }
+    
+    private func callNumber(_ phoneNumber: String) {
+
+        if let phoneCallURL = URL(string: "telprompt://\(phoneNumber)") {
+            let application: UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
     }
 }
 
@@ -103,7 +138,49 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 40
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        tableView.setEditing(editing, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] action, view, completion in
+            if let contact = contact {
+                try! realm.write({
+                    realm.delete(contact.dates[indexPath.row])
+                })
+            }
+            
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+            
+            completion(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+}
+
+// MARK: Message functions
+
+extension EventsViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func sendMessage(_ number: String) {
+        if MFMessageComposeViewController.canSendText() {
+            let controller = MFMessageComposeViewController()
+            controller.recipients = [number]
+            controller.messageComposeDelegate = self
+            
+            present(controller, animated: true, completion: nil)
+        }
+    }
 }

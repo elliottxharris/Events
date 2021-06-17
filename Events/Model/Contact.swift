@@ -16,5 +16,6 @@ class DateLabel: Object {
 
 class Contact: Object {
     @objc dynamic var name: String = ""
+    @objc dynamic var phone: String? = nil
     let dates = List<DateLabel>()
 }
