@@ -5,10 +5,10 @@
 //  Created by Elliott Harris on 6/5/21.
 //
 
-import Foundation
+import SwiftUI
 import RealmSwift
 
-class DateLabel: Object {
+class DateLabel: Object, ObjectKeyIdentifiable {
     @objc dynamic var label: String = ""
     @objc dynamic var date: Date = Date()
     @objc dynamic var isNotified: Bool = false
@@ -17,5 +17,5 @@ class DateLabel: Object {
 class Contact: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var phone: String? = nil
-    let dates = List<DateLabel>()
+    let dates = RealmSwift.List<DateLabel>()
 }

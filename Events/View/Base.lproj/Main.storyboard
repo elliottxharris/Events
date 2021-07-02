@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C4z-92-Uh2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C4z-92-Uh2">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,7 +37,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactCell" id="PAz-cj-jbD" customClass="ContactRow" customModule="Events" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PAz-cj-jbD" id="KOM-dh-HA8">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -98,17 +97,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfb-jR-2S8">
-                                <rect key="frame" x="163.5" y="100" width="87" height="41"/>
+                                <rect key="frame" x="167.5" y="100" width="79.5" height="37"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ow7-Re-43c">
-                                <rect key="frame" x="0.0" y="195" width="414" height="637"/>
+                                <rect key="frame" x="0.0" y="191" width="414" height="641"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EventCell" id="gVs-6y-y73" customClass="EventRow" customModule="Events">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gVs-6y-y73" id="2J2-GO-mIj">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -144,7 +143,7 @@
                                 <sections/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7h-9F-308">
-                                <rect key="frame" x="80" y="832" width="254" height="30"/>
+                                <rect key="frame" x="217" y="832" width="177" height="30"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Delete Contact">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -154,32 +153,46 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zOr-Yn-X5d">
-                                <rect key="frame" x="20" y="153" width="177" height="30"/>
+                                <rect key="frame" x="20" y="149" width="177" height="30"/>
                                 <state key="normal" title="Call"/>
                                 <connections>
                                     <action selector="callButtonPressed:" destination="VLE-1G-8Xb" eventType="touchUpInside" id="Rj4-ew-iYf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mT8-kc-SkM">
-                                <rect key="frame" x="217" y="153" width="177" height="30"/>
+                                <rect key="frame" x="217" y="149" width="177" height="30"/>
                                 <state key="normal" title="Message"/>
                                 <connections>
                                     <action selector="messageButtonPressed:" destination="VLE-1G-8Xb" eventType="touchUpInside" id="4b5-Kk-Hmm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aL7-EC-bIb">
+                                <rect key="frame" x="20" y="832" width="177" height="30"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <state key="normal" title="Add Date">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="VLE-1G-8Xb" eventType="touchUpInside" id="Wy7-cS-RBJ"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YH8-f6-v8V"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="s7h-9F-308" firstAttribute="width" secondItem="B0J-RX-tX1" secondAttribute="width" multiplier="0.5" constant="-30" id="65f-8w-sDc"/>
+                            <constraint firstItem="aL7-EC-bIb" firstAttribute="width" secondItem="B0J-RX-tX1" secondAttribute="width" multiplier="0.5" constant="-30" id="8J2-WX-kJ8"/>
                             <constraint firstItem="zOr-Yn-X5d" firstAttribute="width" secondItem="B0J-RX-tX1" secondAttribute="width" multiplier="0.5" constant="-30" id="DrX-10-SCC"/>
                             <constraint firstItem="ow7-Re-43c" firstAttribute="leading" secondItem="YH8-f6-v8V" secondAttribute="leading" id="ISK-Lj-A5h"/>
-                            <constraint firstItem="s7h-9F-308" firstAttribute="leading" secondItem="YH8-f6-v8V" secondAttribute="leading" constant="80" id="JUu-fM-F8P"/>
+                            <constraint firstItem="aL7-EC-bIb" firstAttribute="top" secondItem="ow7-Re-43c" secondAttribute="bottom" id="JmH-Nf-Jwj"/>
                             <constraint firstItem="mT8-kc-SkM" firstAttribute="width" secondItem="B0J-RX-tX1" secondAttribute="width" multiplier="0.5" constant="-30" id="Pb1-Fg-09h"/>
                             <constraint firstItem="ow7-Re-43c" firstAttribute="trailing" secondItem="YH8-f6-v8V" secondAttribute="trailing" id="RPN-4U-WZm"/>
                             <constraint firstItem="zOr-Yn-X5d" firstAttribute="leading" secondItem="YH8-f6-v8V" secondAttribute="leading" constant="20" id="Uds-Pl-lbj"/>
-                            <constraint firstItem="YH8-f6-v8V" firstAttribute="trailing" secondItem="s7h-9F-308" secondAttribute="trailing" constant="80" id="Zn2-nQ-i3F"/>
+                            <constraint firstItem="YH8-f6-v8V" firstAttribute="trailing" secondItem="s7h-9F-308" secondAttribute="trailing" constant="20" id="Zn2-nQ-i3F"/>
                             <constraint firstItem="mT8-kc-SkM" firstAttribute="top" secondItem="bfb-jR-2S8" secondAttribute="bottom" constant="12" id="aJx-sn-0Yj"/>
+                            <constraint firstItem="aL7-EC-bIb" firstAttribute="leading" secondItem="YH8-f6-v8V" secondAttribute="leading" constant="20" id="eRX-BO-WT0"/>
                             <constraint firstItem="zOr-Yn-X5d" firstAttribute="top" secondItem="bfb-jR-2S8" secondAttribute="bottom" constant="12" id="lFY-nj-jfO"/>
+                            <constraint firstItem="aL7-EC-bIb" firstAttribute="bottom" secondItem="YH8-f6-v8V" secondAttribute="bottom" id="myF-in-kvr"/>
                             <constraint firstItem="YH8-f6-v8V" firstAttribute="trailing" secondItem="mT8-kc-SkM" secondAttribute="trailing" constant="20" id="nZX-wE-Kan"/>
                             <constraint firstItem="bfb-jR-2S8" firstAttribute="top" secondItem="YH8-f6-v8V" secondAttribute="top" constant="12" id="oLO-S1-bBz"/>
                             <constraint firstItem="s7h-9F-308" firstAttribute="top" secondItem="ow7-Re-43c" secondAttribute="bottom" id="piV-QW-bYm"/>
@@ -207,6 +220,9 @@
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

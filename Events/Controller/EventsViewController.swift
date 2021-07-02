@@ -9,6 +9,7 @@ import UIKit
 import Contacts
 import MessageUI
 import RealmSwift
+import SwiftUI
 
 class EventsViewController: UIViewController {
     let realm = try! Realm()
@@ -36,6 +37,21 @@ class EventsViewController: UIViewController {
         }))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    @IBAction func addButtonPressed(_ sender: Any) {
+        if let contact = contact {
+            let date = DateLabel()
+            
+            try! realm.write({
+                contact.dates.append(date)
+            })
+            
+            let hostingController = EditDateViewController(date: date) {
+                self.tableView.reloadData()
+            }
+            
+            showDetailViewController(hostingController, sender: self)
+        }
     }
     
     @IBAction func notifiedSwitchTapped(_ sender: UISwitch) {
@@ -165,6 +181,15 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [delete])
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let contact = contact {
+            let hostingController = EditDateViewController(date: contact.dates[indexPath.row]) {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            
+            showDetailViewController(hostingController, sender: self)
+        }
+    }
 }
 
 // MARK: Message functions

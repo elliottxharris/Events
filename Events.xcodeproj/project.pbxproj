@@ -14,6 +14,7 @@
 		342B2B5C2668FD1B001DB317 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5B2668FD1B001DB317 /* Assets.xcassets */; };
 		342B2B5F2668FD1B001DB317 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5D2668FD1B001DB317 /* LaunchScreen.storyboard */; };
 		347EAD362673947E00766505 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347EAD352673947E00766505 /* LocalNotificationManager.swift */; };
+		3486DD05268D327300E18FE8 /* EditDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486DD04268D327300E18FE8 /* EditDate.swift */; };
 		34BA0743266A6D720016D5F4 /* ContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0742266A6D720016D5F4 /* ContactRow.swift */; };
 		34BA0745266A892E0016D5F4 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0744266A892E0016D5F4 /* EventsViewController.swift */; };
 		34BA0747266AB6430016D5F4 /* EventRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0746266AB6430016D5F4 /* EventRow.swift */; };
@@ -33,6 +34,7 @@
 		342B2B5E2668FD1B001DB317 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		342B2B602668FD1B001DB317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		347EAD352673947E00766505 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalNotificationManager.swift; path = Events/Controller/LocalNotificationManager.swift; sourceTree = SOURCE_ROOT; };
+		3486DD04268D327300E18FE8 /* EditDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDate.swift; sourceTree = "<group>"; };
 		34BA0742266A6D720016D5F4 /* ContactRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRow.swift; sourceTree = "<group>"; };
 		34BA0744266A892E0016D5F4 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		34BA0746266AB6430016D5F4 /* EventRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRow.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				342B2B582668FD19001DB317 /* Main.storyboard */,
 				342B2B5D2668FD1B001DB317 /* LaunchScreen.storyboard */,
+				3486DD04268D327300E18FE8 /* EditDate.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				342B2B532668FD19001DB317 /* AppDelegate.swift in Sources */,
 				342B2B552668FD19001DB317 /* SceneDelegate.swift in Sources */,
 				34BA0745266A892E0016D5F4 /* EventsViewController.swift in Sources */,
+				3486DD05268D327300E18FE8 /* EditDate.swift in Sources */,
 				347EAD362673947E00766505 /* LocalNotificationManager.swift in Sources */,
 				34BA074E266BCA930016D5F4 /* Contact.swift in Sources */,
 			);
