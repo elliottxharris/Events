@@ -8,17 +8,19 @@
 import UIKit
 import Contacts
 import MessageUI
-import RealmSwift
+import CoreData
 import SwiftUI
 
 class EventsViewController: UIViewController {
-    let realm = try! Realm()
     var contact: Contact?
+    var dateLabels: [DateLabel] = []
     let manager = LocalNotificationManager()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var messageButton: UIButton!
     @IBAction func deleteButtonPressed(_ sender: Any) {
@@ -29,9 +31,13 @@ class EventsViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [self] _ in
             if let contact = contact {
-                try! realm.write({
-                    realm.delete(contact)
-                })
+                do {
+                    context.delete(contact)
+                    try context.save()
+                } catch {
+                    print("Could not delete contact")
+                }
+                
                 navigationController?.popViewController(animated: true)
             }
         }))
@@ -40,11 +46,17 @@ class EventsViewController: UIViewController {
     }
     @IBAction func addButtonPressed(_ sender: Any) {
         if let contact = contact {
-            let date = DateLabel()
+            let date = DateLabel(context: context)
+            date.date = Date()
+            date.label = ""
+            date.contact = contact
             
-            try! realm.write({
-                contact.dates.append(date)
-            })
+            do {
+                try context.save()
+                dateLabels = contact.dateLabels!.allObjects as! [DateLabel]
+            } catch {
+                print("Could not add date")
+            }
             
             let hostingController = EditDateViewController(date: date) {
                 self.tableView.reloadData()
@@ -59,23 +71,28 @@ class EventsViewController: UIViewController {
             let indexPath = tableView.indexPath(for: cell)
             
             if let contact = contact {
-                let event = contact.dates[indexPath!.row]
+                let event = dateLabels[indexPath!.row]
+                event.isNotified.toggle()
                 
-                try! realm.write({
-                    contact.dates[indexPath!.row].isNotified = !event.isNotified
-                })
+                do {
+                    try context.save()
+                } catch {
+                    print("Could not notify on date")
+                }
                 
-                if event.isNotified {
-                    let offsetDate = Calendar.current.date(byAdding: .day, value: -7, to: event.date) ?? event.date
-                    var notificationDate = Calendar.current.dateComponents([.calendar, .year, .month, .day, .hour,], from: offsetDate)
-                    notificationDate.hour = 12
-                    notificationDate.year = Calendar.current.dateComponents([.year], from: Date()).year
-                    
-                    let notification = LocalNotificationManager.Notification(id: "\(contact.name): \(event.label)", title: "\(contact.name)'s \(event.label) is coming up", name: contact.name, datetime: notificationDate)
-                    
-                    manager.schedule(notification: notification)
-                } else {
-                    manager.removeScheduledNotification(id: "\(contact.name): \(event.label)")
+                if let name = contact.name, let label = event.label {
+                    if event.isNotified {
+                        let offsetDate = Calendar.current.date(byAdding: .day, value: -7, to: event.date!) ?? event.date!
+                        var notificationDate = Calendar.current.dateComponents([.calendar, .year, .month, .day, .hour,], from: offsetDate)
+                        notificationDate.hour = 12
+                        notificationDate.year = Calendar.current.dateComponents([.year], from: Date()).year
+                        
+                        let notification = LocalNotificationManager.Notification(id: "\(name): \(label)", title: "\(name)'s \(label) is coming up", name: name, datetime: notificationDate)
+                        
+                        manager.schedule(notification: notification)
+                    } else {
+                        manager.removeScheduledNotification(id: "\(name): \(label)")
+                    }
                 }
             }
         }
@@ -97,6 +114,11 @@ class EventsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let contact = contact {
+            dateLabels = contact.dateLabels!.allObjects as! [DateLabel]
+        }
+        
         tableView.delegate = self
         tableView.dataSource = self
     
@@ -108,6 +130,7 @@ class EventsViewController: UIViewController {
         }
         
         deleteButton.layer.cornerRadius = 5
+        addButton.layer.cornerRadius = 5
         
         callButton.layer.cornerRadius = 5
         callButton.backgroundColor = UIColor(hex: "#262626")
@@ -131,8 +154,8 @@ class EventsViewController: UIViewController {
 
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let contact = contact {
-            return contact.dates.count
+        if let contact = contact, let dateLabels = contact.dateLabels {
+            return dateLabels.count
         }
         
         return 0
@@ -140,14 +163,14 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventRow
-        if let contact = contact {
+        if let label = dateLabels[indexPath.row].label, let date = dateLabels[indexPath.row].date {
             let formatter = DateFormatter()
             formatter.timeStyle = .none
             formatter.dateStyle = .medium
-            cell.cellLabel.text = "\(contact.dates[indexPath.row].label) on \(formatter.string(from: contact.dates[indexPath.row].date))"
+            cell.cellLabel.text = "\(label) on \(formatter.string(from: date))"
             
-            cell.cellToggle.isOn = contact.dates[indexPath.row].isNotified
-            cell.cellToggle.accessibilityLabel = "\(contact.dates[indexPath.row].label) switch"
+            cell.cellToggle.isOn = dateLabels[indexPath.row].isNotified
+            cell.cellToggle.accessibilityLabel = "\(label) switch"
         }
         
         return cell
@@ -165,10 +188,11 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] action, view, completion in
-            if let contact = contact {
-                try! realm.write({
-                    realm.delete(contact.dates[indexPath.row])
-                })
+                context.delete(dateLabels[indexPath.row])
+            do {
+                try context.save()
+            } catch {
+                print("Could not delete date")
             }
             
             tableView.beginUpdates()
@@ -182,13 +206,11 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let contact = contact {
-            let hostingController = EditDateViewController(date: contact.dates[indexPath.row]) {
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
-            
-            showDetailViewController(hostingController, sender: self)
+        let hostingController = EditDateViewController(date: dateLabels[indexPath.row]) {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        
+        showDetailViewController(hostingController, sender: self)
     }
 }
 

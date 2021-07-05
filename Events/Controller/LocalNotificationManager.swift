@@ -7,7 +7,7 @@
 
 import UIKit
 import UserNotifications
-import RealmSwift
+import CoreData
 
 class LocalNotificationManager {
     struct Notification {
@@ -87,18 +87,23 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             }
 
         if let eventVC = storyboard.instantiateViewController(withIdentifier: "EventsViewController") as? EventsViewController,
-           let contactVC = rootViewController as? UINavigationController, let realm = try? Realm() {
+           let contactVC = rootViewController as? UINavigationController {
 
-            let contacts = realm.objects(Contact.self)
-            let contact = contacts.first { contact in
-                contact.name == response.notification.request.content.userInfo["name"] as! String
+            let fetchRequest = NSFetchRequest<Contact>(entityName: "Contact")
+            do {
+                let contacts: [Contact] = try persistentContainer.viewContext.fetch(fetchRequest)
+                let contact = contacts.first { contact in
+                    contact.name == response.notification.request.content.userInfo["name"] as? String
+                }
+
+                if let contact = contact {
+                    eventVC.contact = contact
+                    contactVC.pushViewController(eventVC, animated: true)
+                }
+
+            } catch {
+                print("Could not fetch contacts")
             }
-
-            if let contact = contact {
-                eventVC.contact = contact
-                contactVC.pushViewController(eventVC, animated: true)
-            }
-
         }
 
         completionHandler()

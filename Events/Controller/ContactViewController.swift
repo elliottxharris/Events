@@ -7,14 +7,14 @@
 
 import UIKit
 import ContactsUI
-import RealmSwift
+import CoreData
 import UserNotifications
 
 class ContactViewController: UIViewController {
-    let realm = try! Realm()
     var contactStore = CNContactStore()
-    var addedContacts: Results<Contact>?
+    var addedContacts: [Contact] = []
     let manager = LocalNotificationManager()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,7 +29,12 @@ class ContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addedContacts = realm.objects(Contact.self)
+        do {
+            addedContacts = try context.fetch(NSFetchRequest<Contact>(entityName: "Contact"))
+        } catch {
+            print("Could not fetch contacts")
+        }
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.delegate = self
         tableView.dataSource = self
@@ -38,6 +43,12 @@ class ContactViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        do {
+            addedContacts = try context.fetch(NSFetchRequest<Contact>(entityName: "Contact"))
+        } catch {
+            print("Could not fetch contacts")
+        }
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -45,7 +56,7 @@ class ContactViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let contactVC = segue.destination as? EventsViewController, let selectedIndex = tableView.indexPathForSelectedRow?.row, let addedContacts = addedContacts else { return }
+        guard let contactVC = segue.destination as? EventsViewController, let selectedIndex = tableView.indexPathForSelectedRow?.row else { return }
         contactVC.contact = addedContacts[selectedIndex] as Contact
     }
     
@@ -58,12 +69,12 @@ class ContactViewController: UIViewController {
 
 extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return addedContacts?.count ?? 0
+        return addedContacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactRow
-        let contact = addedContacts![indexPath.row] as Contact
+        let contact = addedContacts[indexPath.row] as Contact
         cell.name?.text = contact.name
         
         return cell
@@ -75,10 +86,13 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] action, view, completion in
-            if let contacts = addedContacts {
-                try! realm.write({
-                    realm.delete(contacts[indexPath.row])
-                })
+            context.delete(addedContacts[indexPath.row])
+            
+            do {
+                try context.save()
+                addedContacts = try context.fetch(NSFetchRequest(entityName: "Contact"))
+            } catch {
+                print("Could not delete contact")
             }
             
             tableView.beginUpdates()
@@ -96,7 +110,7 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ContactViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        let newContact = Contact()
+        let newContact = Contact(context: context)
         newContact.name = createFullName(contact: contact)
         
         if let phone = contact.phoneNumbers.first {
@@ -104,35 +118,45 @@ extension ContactViewController: CNContactPickerDelegate {
         }
         
         if let bday = contact.birthday {
-            newContact.dates.append(DateLabel(value: ["label": "Birthday", "date": bday.date ?? Date()]))
+            let newDate = DateLabel(context: context)
+            newDate.label = "Birthday"
+            newDate.date =  bday.date ?? Date()
+            newDate.contact = newContact
         }
         
         let newDates = contact.dates.map { date -> DateLabel in
             let label = date.label?.trimmingCharacters(in: CharacterSet("_$!<>".unicodeScalars))
             let newDate = date.value.date
             
-            return DateLabel(value: ["label": label ?? "", "date": newDate ?? Date()])
+            let dateLabel = DateLabel(context: context)
+            dateLabel.label = label ?? ""
+            dateLabel.date = newDate ?? Date()
+            
+            
+            return dateLabel
         }
         
         newDates.forEach { dateLabel in
-            newContact.dates.append(dateLabel)
+            dateLabel.contact = newContact
         }
         
-        if let addedContacts = addedContacts {
-            if addedContacts.contains(where: { contact in
-                contact.name == newContact.name
-            }) {
-                addDuplicate(newContact: newContact)
-            } else {
-                try! realm.write({
-                    realm.add(newContact)
-                })
-                
-                tableView.beginUpdates()
-                let indexPath = IndexPath(row: addedContacts.count - 1, section: 0)
-                tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
-                tableView.endUpdates()
+        if addedContacts.contains(where: { contact in
+            contact.name == newContact.name
+        }) {
+            addDuplicate(newContact: newContact)
+        } else {
+            do {
+                try context.save()
+                addedContacts = try context.fetch(NSFetchRequest(entityName: "Contact"))
+            } catch {
+                print("Could not save contact")
+                print(error)
             }
+            
+            tableView.beginUpdates()
+            let indexPath = IndexPath(row: addedContacts.count - 1, section: 0)
+            tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
+            tableView.endUpdates()
         }
         
     }
@@ -140,15 +164,15 @@ extension ContactViewController: CNContactPickerDelegate {
     func addDuplicate(newContact: Contact) {
         let alertController = UIAlertController(title: "Duplicate", message: "This may be a duplicate. Do you still want to add this contact?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { [self] _ in
-            try! realm.write({
-                realm.add(newContact)
-            })
+            do {
+                try context.save()
+            } catch {
+                print("Could not save duplicate")
+            }
             
             tableView.beginUpdates()
-            if let addedContacts = addedContacts{
                 let indexPath = IndexPath(row: addedContacts.count - 1, section: 0)
                 tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.bottom)
-            }
             tableView.endUpdates()
         }
         let noAction = UIAlertAction(title: "No", style: .default, handler: nil)

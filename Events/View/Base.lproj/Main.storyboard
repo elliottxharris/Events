@@ -204,6 +204,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Events" id="GHx-hY-OmI"/>
                     <connections>
+                        <outlet property="addButton" destination="aL7-EC-bIb" id="t1C-LJ-kil"/>
                         <outlet property="callButton" destination="zOr-Yn-X5d" id="pdA-26-ibX"/>
                         <outlet property="deleteButton" destination="s7h-9F-308" id="9rB-ML-7nk"/>
                         <outlet property="messageButton" destination="mT8-kc-SkM" id="b0Q-4k-OLl"/>

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,13 +14,11 @@
 		342B2B5C2668FD1B001DB317 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5B2668FD1B001DB317 /* Assets.xcassets */; };
 		342B2B5F2668FD1B001DB317 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342B2B5D2668FD1B001DB317 /* LaunchScreen.storyboard */; };
 		347EAD362673947E00766505 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347EAD352673947E00766505 /* LocalNotificationManager.swift */; };
+		3480D4932690CD9C00D72307 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3480D4912690CD9C00D72307 /* Model.xcdatamodeld */; };
 		3486DD05268D327300E18FE8 /* EditDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486DD04268D327300E18FE8 /* EditDate.swift */; };
 		34BA0743266A6D720016D5F4 /* ContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0742266A6D720016D5F4 /* ContactRow.swift */; };
 		34BA0745266A892E0016D5F4 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0744266A892E0016D5F4 /* EventsViewController.swift */; };
 		34BA0747266AB6430016D5F4 /* EventRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA0746266AB6430016D5F4 /* EventRow.swift */; };
-		34BA074A266BC77A0016D5F4 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 34BA0749266BC77A0016D5F4 /* Realm */; };
-		34BA074C266BC77A0016D5F4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 34BA074B266BC77A0016D5F4 /* RealmSwift */; };
-		34BA074E266BCA930016D5F4 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BA074D266BCA930016D5F4 /* Contact.swift */; };
 		34F1F8392676B3AC006EFE93 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F1F8382676B3AC006EFE93 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,11 +32,11 @@
 		342B2B5E2668FD1B001DB317 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		342B2B602668FD1B001DB317 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		347EAD352673947E00766505 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalNotificationManager.swift; path = Events/Controller/LocalNotificationManager.swift; sourceTree = SOURCE_ROOT; };
+		3480D4922690CD9C00D72307 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3486DD04268D327300E18FE8 /* EditDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDate.swift; sourceTree = "<group>"; };
 		34BA0742266A6D720016D5F4 /* ContactRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRow.swift; sourceTree = "<group>"; };
 		34BA0744266A892E0016D5F4 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		34BA0746266AB6430016D5F4 /* EventRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRow.swift; sourceTree = "<group>"; };
-		34BA074D266BCA930016D5F4 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		34F1F8382676B3AC006EFE93 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,8 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34BA074C266BC77A0016D5F4 /* RealmSwift in Frameworks */,
-				34BA074A266BC77A0016D5F4 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				347EAD352673947E00766505 /* LocalNotificationManager.swift */,
-				34BA074D266BCA930016D5F4 /* Contact.swift */,
+				3480D4912690CD9C00D72307 /* Model.xcdatamodeld */,
 				34BA0746266AB6430016D5F4 /* EventRow.swift */,
 				34BA0742266A6D720016D5F4 /* ContactRow.swift */,
 				34F1F8382676B3AC006EFE93 /* Extensions.swift */,
@@ -133,8 +129,6 @@
 			);
 			name = Events;
 			packageProductDependencies = (
-				34BA0749266BC77A0016D5F4 /* Realm */,
-				34BA074B266BC77A0016D5F4 /* RealmSwift */,
 			);
 			productName = Events;
 			productReference = 342B2B4F2668FD19001DB317 /* Events.app */;
@@ -164,7 +158,6 @@
 			);
 			mainGroup = 342B2B462668FD19001DB317;
 			packageReferences = (
-				34BA0748266BC77A0016D5F4 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 342B2B502668FD19001DB317 /* Products */;
 			projectDirPath = "";
@@ -200,9 +193,9 @@
 				342B2B532668FD19001DB317 /* AppDelegate.swift in Sources */,
 				342B2B552668FD19001DB317 /* SceneDelegate.swift in Sources */,
 				34BA0745266A892E0016D5F4 /* EventsViewController.swift in Sources */,
+				3480D4932690CD9C00D72307 /* Model.xcdatamodeld in Sources */,
 				3486DD05268D327300E18FE8 /* EditDate.swift in Sources */,
 				347EAD362673947E00766505 /* LocalNotificationManager.swift in Sources */,
-				34BA074E266BCA930016D5F4 /* Contact.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,29 +402,18 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		34BA0748266BC77A0016D5F4 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-cocoa.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.7.6;
-			};
+/* Begin XCVersionGroup section */
+		3480D4912690CD9C00D72307 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3480D4922690CD9C00D72307 /* Model.xcdatamodel */,
+			);
+			currentVersion = 3480D4922690CD9C00D72307 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
 		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		34BA0749266BC77A0016D5F4 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 34BA0748266BC77A0016D5F4 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = Realm;
-		};
-		34BA074B266BC77A0016D5F4 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 34BA0748266BC77A0016D5F4 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = RealmSwift;
-		};
-/* End XCSwiftPackageProductDependency section */
+/* End XCVersionGroup section */
 	};
 	rootObject = 342B2B472668FD19001DB317 /* Project object */;
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="21A5248p" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Contact" representedClassName="Contact" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <relationship name="dateLabels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DateLabel" inverseName="contact" inverseEntity="DateLabel"/>
+    </entity>
+    <entity name="DateLabel" representedClassName="DateLabel" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isNotified" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="label" attributeType="String"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="dateLabels" inverseEntity="Contact"/>
+    </entity>
+    <elements>
+        <element name="Contact" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="DateLabel" positionX="-54" positionY="9" width="128" height="89"/>
+    </elements>
+</model>

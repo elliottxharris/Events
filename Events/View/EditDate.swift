@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealmSwift
 
 final class EditDateViewController: UIHostingController<EditDate> {
     var updateTable: (() -> Void)?
@@ -28,7 +27,7 @@ final class EditDateViewController: UIHostingController<EditDate> {
 }
 
 struct EditDate: View {
-    @ObservedRealmObject var date: DateLabel
+    @ObservedObject var date: DateLabel
     
     var dismiss: (() -> Void)?
     
@@ -36,8 +35,8 @@ struct EditDate: View {
         NavigationView {
             Form {
                 Section(header: Text("Details"), content: {
-                    TextField("Event Name", text: $date.label)
-                    DatePicker("Date", selection: $date.date, displayedComponents: [.date])
+                    TextField("Event Name", text: Binding($date.label)!)
+                    DatePicker("Date", selection: Binding($date.date)!, displayedComponents: [.date])
                 })
             }
             .navigationBarItems(trailing: Button("Done", action: {
