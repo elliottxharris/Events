@@ -188,9 +188,11 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [self] action, view, completion in
-                context.delete(dateLabels[indexPath.row])
+            context.delete(dateLabels[indexPath.row])
+            
             do {
                 try context.save()
+                dateLabels = contact?.dateLabels!.allObjects as! [DateLabel]
             } catch {
                 print("Could not delete date")
             }
